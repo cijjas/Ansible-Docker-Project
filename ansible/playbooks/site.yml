@@ -1,0 +1,11 @@
+- name: Configurar Servidores Web
+  hosts: webservers
+  become: yes
+  roles:
+    - webserver
+
+- name: Configurar Servidores de Base de Datos
+  hosts: dbservers
+  become: yes
+  roles:
+    - dbserver

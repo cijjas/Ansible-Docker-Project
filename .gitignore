@@ -1,0 +1,15 @@
+# Claves y credenciales
+ansible/inventories/group_vars/*vars.yml
+ansible/*vault.yml
+*.key
+*.pem
+
+# Archivos de logs
+*.log
+
+# Archivos de Python compilados
+__pycache__/
+*.pyc
+
+# Directorios de Ansible
+awx/

@@ -1,0 +1,49 @@
+version: '3'
+services:
+  web1:
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile
+    container_name: web1
+    ports:
+      - "8081:80"
+      - "2222:22"
+    networks:
+      - ansible_net
+
+  web2:
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile
+    container_name: web2
+    ports:
+      - "8082:80"
+      - "2223:22"
+    networks:
+      - ansible_net
+
+  db1:
+    build:
+      context: ./dbserver
+      dockerfile: Dockerfile
+    container_name: db1
+    ports:
+      - "2224:22"
+      - "3307:3306" # Expose MySQL for testing
+    networks:
+      - ansible_net
+
+  db2:
+    build:
+      context: ./dbserver
+      dockerfile: Dockerfile
+    container_name: db2
+    ports:
+      - "2225:22"
+      - "3308:3306" # Expose MySQL for testing
+    networks:
+      - ansible_net
+
+networks:
+  ansible_net:
+    driver: bridge

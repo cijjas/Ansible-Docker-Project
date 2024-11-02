@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  awx:
+    image: ansible/awx:latest
+    ports:
+      - "80:80"
+    environment:
+      SECRET_KEY: "your_secret_key"
+      DATABASE_NAME: "awx"
+      DATABASE_USER: "awx"
+      DATABASE_PASSWORD: "awxpass"
+      DATABASE_PORT: "5432"
+      DATABASE_HOST: "postgres"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: "awx"
+      POSTGRES_PASSWORD: "awxpass"
+      POSTGRES_DB: "awx"
