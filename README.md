@@ -8,6 +8,17 @@ Este proyecto implementa una infraestructura utilizando Ansible y Docker para de
 - Ansible
 - Docker Compose
 
+## Enunciado
+
+Tema 7: Ansible
+- Utilizar Ansible para configurar un conjunto de servidores con una función determinada, por ejemplo web servers con una base de datos para persistir la información.
+- Presentar un diagrama con el esquema de la topología usada.
+- Crear una playbook con instalación de paquetes, creación de usuarios, directorios, reglas de firewall, etc.
+- Utilizar templates jinja2 para generar archivos de configuración
+- Mostrar la implementación en al menos dos grupos (ej: bases de datos, web servers) cómo mínimo 2 hosts por grupo.
+- Demostrar alguna de las interfaces gráficas disponibles para Ansible.
+- Mostrar historial de uso de la herramienta y corridas previas para no demorar la presentación.
+
 ## Estructura del Proyecto
 
 - **ansible/**: Contiene los playbooks, roles y configuraciones de Ansible.
@@ -24,9 +35,11 @@ Este proyecto implementa una infraestructura utilizando Ansible y Docker para de
 
 1. **Clonar el repositorio:**
 
-   ```bash
-   git clone https://github.com/tu_usuario/ansible-docker-project.git
-   cd ansible-docker-project
+```bash
+git clone https://github.com/tu_usuario/ansible-docker-project.git
+cd ansible-docker-project
+
+```
 
 # Docker
 
