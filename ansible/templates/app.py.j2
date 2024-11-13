@@ -1,9 +1,10 @@
+# app.py.j2
 from flask import Flask, redirect, url_for
 from pymongo import MongoClient
 
 app = Flask(__name__)
 
-client = MongoClient('mongodb://{{ db_hosts }}/?replicaSet=rs0')
+client = MongoClient('mongodb://db1:27017,db2:27017/?replicaSet=rs0')
 db = client.likes_db
 likes_collection = db.likes
 

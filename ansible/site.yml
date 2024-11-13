@@ -1,4 +1,3 @@
----
 - hosts: all
   become: yes
   tasks:
@@ -32,21 +31,6 @@
         name: mongodb
         state: restarted
         enabled: yes
-
-    - name: Instalar UFW
-      apt:
-        name: ufw
-        state: present
-
-    - name: Permitir puerto de MongoDB
-      ufw:
-        rule: allow
-        port: 27017
-
-    - name: Habilitar UFW
-      ufw:
-        state: enabled
-        policy: deny
 
     - name: Inicializar replica set en el primario
       shell: |
@@ -94,25 +78,8 @@
         owner: webuser
         group: webuser
         mode: '0755'
-        vars:
-          db_hosts: "{{ db_hosts }}"
 
-    - name: Instalar UFW
-      apt:
-        name: ufw
-        state: present
-
-    - name: Permitir puerto de Flask
-      ufw:
-        rule: allow
-        port: 5000
-
-    - name: Habilitar UFW
-      ufw:
-        state: enabled
-        policy: deny
 
     - name: Iniciar la aplicación
       become_user: webuser
       shell: nohup python3 /opt/myapp/app.py &
-  

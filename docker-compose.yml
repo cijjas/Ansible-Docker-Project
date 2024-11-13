@@ -1,23 +1,58 @@
 version: '3'
-
 services:
-  awx:
-    image: ansible/awx:latest
+  web1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web1
+    hostname: web1
+    networks:
+      mynetwork:
+        ipv4_address: 172.20.0.2
     ports:
-      - "80:80"
-    environment:
-      SECRET_KEY: "your_secret_key"
-      DATABASE_NAME: "awx"
-      DATABASE_USER: "awx"
-      DATABASE_PASSWORD: "awxpass"
-      DATABASE_PORT: "5432"
-      DATABASE_HOST: "postgres"
-    depends_on:
-      - postgres
+      - "5001:5000"
+      - "2222:22"
 
-  postgres:
-    image: postgres:12
-    environment:
-      POSTGRES_USER: "awx"
-      POSTGRES_PASSWORD: "awxpass"
-      POSTGRES_DB: "awx"
+  web2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web2
+    hostname: web2
+    networks:
+      mynetwork:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "5002:5000"
+      - "2223:22"
+
+  db1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: db1
+    hostname: db1
+    networks:
+      mynetwork:
+        ipv4_address: 172.20.0.4
+    ports:
+      - "2224:22"
+
+  db2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: db2
+    hostname: db2
+    networks:
+      mynetwork:
+        ipv4_address: 172.20.0.5
+    ports:
+      - "2225:22"
+
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

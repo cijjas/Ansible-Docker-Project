@@ -53,25 +53,11 @@ docker rm -f web1 web2 db1 db2
 ```
 
 ```sh
-docker-compose -f ./docker/docker-compose.yml  down 
-docker-compose -f ./docker/docker-compose.yml  up --build -d
+# Build the Docker image
+docker build -t ansible-demo .
 
-```
-
-Start building
-
-```sh
-docker build -t ubuntu-ssh ./docker/base
-docker build -t webserver-image ./docker/webserver
-docker build -t dbserver-image ./docker/dbserver
-
-```
-
-up
-
-```sh
-docker-compose -f ./docker/docker-compose.yml up -d
-docker ps
+# Start the containers
+docker-compose up -d
 
 ```
 
