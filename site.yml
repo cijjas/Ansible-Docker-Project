@@ -71,6 +71,30 @@
         group: webuser
         mode: '0755'
 
+    - name: Crear directorio para templates de la aplicación
+      file:
+        path: /opt/myapp/templates
+        state: directory
+        owner: webuser
+        group: webuser
+        mode: '0755'
+
+    - name: Crear directorio para archivos estáticos
+      file:
+        path: /opt/myapp/static/images
+        state: directory
+        owner: webuser
+        group: webuser
+        mode: '0755'
+
+    - name: Copiar imagen de fondo de la aplicación
+      copy:
+        src: static/images/background.jpeg
+        dest: /opt/myapp/static/images/background.jpeg
+        owner: webuser
+        group: webuser
+        mode: '0644'
+
     - name: Copiar código de la aplicación
       template:
         src: templates/app.py.j2
@@ -79,6 +103,13 @@
         group: webuser
         mode: '0755'
 
+    - name: Copiar plantilla HTML de la aplicación
+      copy:
+        src: templates/index.html    # Sin extensión .j2
+        dest: /opt/myapp/templates/index.html
+        owner: webuser
+        group: webuser
+        mode: '0644'
 
     - name: Iniciar la aplicación
       become_user: webuser

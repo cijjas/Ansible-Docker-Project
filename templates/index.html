@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{{ url_for('static', filename='images/background.jpeg') }}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        form {
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .comment-box {
+            text-align: left;
+            padding: 0.5rem;
+            border-top: 1px solid #eee;
+            margin-top: 1rem;
+        }
+
+        .like-dislike {
+            display: flex;
+            gap: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .like-dislike button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.9rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .like-dislike button.dislike {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Comments</h1>
+        <form method="post" action="/">
+            <input type="text" name="comment" placeholder="Write a comment..." required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="comments-section">
+            {% for comment in comments %}
+            <div class="comment-box">
+                <p>{{ comment.text }}</p>
+                <div class="like-dislike">
+                    <button onclick="location.href='{{ url_for('like', comment_id=comment._id) }}'">👍 {{ comment.likes
+                        }}</button>
+                    <button class="dislike"
+                        onclick="location.href='{{ url_for('dislike', comment_id=comment._id) }}'">👎 {{
+                        comment.dislikes }}</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+from flask import Flask, render_template, request, redirect, url_for
+from pymongo import MongoClient
+from bson import ObjectId  # Importar ObjectId
+
+app = Flask(__name__)
+
+client = MongoClient('mongodb://{{ db_hosts }}/?replicaSet=rs0')
+db = client.comments_db
+comments_collection = db.comments
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        # Obtener el comentario del formulario
+        comment_text = request.form.get('comment')
+        if comment_text:
+            # Insertar el comentario con campos de like y dislike inicializados en 0
+            comments_collection.insert_one({'text': comment_text, 'likes': 0, 'dislikes': 0})
+        return redirect(url_for('index'))
+    
+    # Obtener todos los comentarios de la base de datos
+    comments = comments_collection.find()
+    return render_template('index.html', comments=comments)
+
+@app.route('/like/<comment_id>')
+def like(comment_id):
+    # Convertir el comment_id a ObjectId y actualizar el contador de likes
+    comments_collection.update_one({'_id': ObjectId(comment_id)}, {'$inc': {'likes': 1}})
+    return redirect(url_for('index'))
+
+@app.route('/dislike/<comment_id>')
+def dislike(comment_id):
+    # Convertir el comment_id a ObjectId y actualizar el contador de dislikes
+    comments_collection.update_one({'_id': ObjectId(comment_id)}, {'$inc': {'dislikes': 1}})
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
