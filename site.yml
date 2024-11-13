@@ -1,11 +1,19 @@
 - hosts: all
   become: yes
+  vars:
+    ansible_remote_tmp: /home/webuser/.ansible/tmp
   tasks:
     - name: Asegurar que python3 está instalado
       apt:
         name: python3
         state: present
       when: ansible_os_family == "Debian"
+
+    - name: Ensure Ansible tmp directory exists with correct permissions
+      file:
+        path: /tmp/.ansible/tmp
+        state: directory
+        mode: '0777'
 
 - hosts: dbservers
   become: yes
@@ -42,6 +50,7 @@
   vars:
     db_hosts: "db1:27017,db2:27017"
   tasks:
+
     - name: Crear usuario 'webuser'
       user:
         name: webuser
