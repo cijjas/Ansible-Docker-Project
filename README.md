@@ -19,8 +19,8 @@ Es necesario tener instalados:
 ## Uso
 
 ```sh
-git clone https://github.com/cijjas/ansible.git
-cd ansible
+git clone https://github.com/cijjas/Ansible-Docker-Project.git
+cd Ansible-Docker-Project
 
 ```
 
